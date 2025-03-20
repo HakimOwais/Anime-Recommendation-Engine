@@ -1,6 +1,9 @@
 numpy
 pandas
 scikit-learn
+setuptools
+google-cloud-storage
 flask
 fastapi
+pyyaml
 uvicorn[standard]
