@@ -176,6 +176,7 @@ cython_debug/
 logs/
 
 notebook/anime.ipynb
+notebook/experiments.ipynb
 
 artifacts/
 artifacts
