@@ -6,6 +6,9 @@ import sys
 
 from source.custom_logger import get_logger
 from source.custom_exception import CustomException
+from config.path_config import *
+
+print(ANIMELIST_CSV)
 
 logger = get_logger(__name__)
 
@@ -31,15 +34,15 @@ class DataProcessor:
 
     def load_data(self, usecols):
         try:
-            self.rating_df = pd.read_csv(self.input_file, low_memory=True, usecols=["user_id", "anime_id", "rating"])
+            self.rating_df = pd.read_csv(self.input_file, low_memory=True, usecols=usecols)
             logger.info("Dataset loaded successfully")
         except Exception as e:
             raise CustomException(f"Failed to load dataset {e}")
         
-    def filter_data(self):
+    def filter_data(self, min_rating=400):
         try:
             n_ratings = self.rating_df["user_id"].value_counts()
-            self.rating_df = self.rating_df[self.rating_df["user_id"].isin(n_ratings[n_ratings>=400].index)].copy()
+            self.rating_df = self.rating_df[self.rating_df["user_id"].isin(n_ratings[n_ratings>=min_rating].index)].copy()
             logger.info("Filtered data successfully")
         except Exception as e:
             raise CustomException(f"Failed to filter dataset {e}")
@@ -96,4 +99,84 @@ class DataProcessor:
 
     # X_trains arrays and X_test are numpy arrays and should be saved as pkl file format
     def save_artifacts(self):
-        pass
+        try:
+            artifacts = {
+                "user2user_encoded": self.user2user_encoded,
+                "user2user_decoded": self.user2user_decoded,
+                "item2item_encoded": self.item2item_encoded,
+                "item2item_decoded": self.item2item_decoded,
+            }
+            for name, data in artifacts.items():
+                joblib.dump(data, os.path.join(self.output_dir, f"{name}.pkl"))
+                logger.info("Artifacts saved successfully")
+
+            joblib.dump(self.X_train_array, X_TRAIN_ARRAY)
+            joblib.dump(self.X_test_array, X_TEST_ARRAY)
+            joblib.dump(self.y_train, Y_TRAIN)
+            joblib.dump(self.y_test, Y_TEST)
+
+            self.rating_df.to_csv(RATING_DF, index=False)
+
+            logger.info("All the files have been saved successfully ")
+
+        except Exception as e:
+            raise CustomException("Failed to save the artifacts", e)
+
+
+    # Read Anime CSV file 
+    def process_anime_data(self):
+        try:
+            df = pd.read_csv(ANIME_CSV)
+            # Reading Synopsis data also
+            cols = ["MAL_ID","Name","Genres","sypnopsis"]
+
+            synopsis_df = pd.read_csv(SYNOPSIS_CSV, usecols=cols)
+
+            df = df.replace("Unknown", np.nan)
+
+            def getAnimeName(anime_id):
+                try:
+                    name = df[df.anime_id==anime_id].eng_version.values[0]
+                    if name is np.nan:
+                        name = df[df.anime_id==anime_id].Name.values[0]
+
+                except:
+                    print("Error")
+
+                return name
+            
+            df["anime_id"] = df["MAL_ID"]
+            df["eng_version"] = df["English name"]
+            df["eng_version"] = df.anime_id.apply(lambda x:getAnimeName(x))
+
+            df.sort_values(by = ["Score"], inplace=True, ascending=False, kind="quicksort", na_position="last")
+
+            df = df[["anime_id" , "eng_version","Score","Genres","Episodes","Type","Premiered","Members"]]
+    
+            df.to_csv(DF, index=False)
+            synopsis_df.to_csv(SYNOPSIS_CSV, index=False)
+            logger.info("Anime and anime with synopsis datasets preprocessed successfully")
+
+        except Exception as e:
+            raise CustomException("Failed to preprocesss the anime and anime with synopsis datasets", e)
+        
+
+    def run(self):
+        try:
+            self.load_data(usecols=["user_id", "anime_id", "rating"])
+            self.filter_data()
+            self.scale_ratings()
+            self.encode_data()
+            self.split_data()
+            self.save_artifacts()
+            self.process_anime_data()
+
+            logger.info("Data processing pipeline run successfully...... CONGRATS")
+        except Exception as e:
+            logger.error(str(e))
+            raise CustomException("Failed to processs the Data processor Pipeline", e)
+        
+if __name__=="__main__":
+    data_processor = DataProcessor(ANIMELIST_CSV,PROCESSED_DIR)
+    data_processor.run()
+
