@@ -3,7 +3,7 @@ from tensorflow.keras import layers
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.layers import Input, Embedding, Flatten, Activation, BatchNormalization, Dot, Dense, Concatenate
-from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateSchedular, TensorBoard, EarlyStopping
+from tensorflow.keras.callbacks import ModelCheckpoint, LearningRateScheduler, TensorBoard, EarlyStopping
 
 from source.custom_exception import CustomException
 from source.custom_logger import get_logger
@@ -14,7 +14,7 @@ logger = get_logger(__name__)
 class TwoTowerModel:
     def __init__(self, config_path):
         try:
-            self.config = config_path
+            self.config = read_yaml(config_path)
             logger.info("Loaded configuration from config.yaml")
 
         except Exception as e:
