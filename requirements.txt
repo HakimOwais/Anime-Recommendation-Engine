@@ -1,5 +1,7 @@
 numpy
 pandas
+comet_ml
+python-dotenv
 scikit-learn
 setuptools
 google-cloud-storage
