@@ -178,5 +178,8 @@ logs/
 notebook/anime.ipynb
 notebook/experiments.ipynb
 
-artifacts/
-artifacts
+artifacts/model
+artifacts/model_checkpoint
+artifacts/processed
+artifacts/raw
+artifacts/weights
