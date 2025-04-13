@@ -12,3 +12,4 @@ uvicorn[standard]
 tensorflow
 matplotlib
 wordcloud
+dvc
