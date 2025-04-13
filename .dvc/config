@@ -1,0 +1,4 @@
+[core]
+    remote = my-dvc-remote
+['remote "my-dvc-remote"']
+    url = gs://dvc-bucket-789/

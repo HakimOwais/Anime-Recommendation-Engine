@@ -142,7 +142,6 @@ class DataProcessor:
 
                 except:
                     print("Error")
-
                 return name
             
             df["anime_id"] = df["MAL_ID"]
@@ -154,7 +153,7 @@ class DataProcessor:
             df = df[["anime_id" , "eng_version","Score","Genres","Episodes","Type","Premiered","Members"]]
     
             df.to_csv(DF, index=False)
-            synopsis_df.to_csv(SYNOPSIS_CSV, index=False)
+            synopsis_df.to_csv(SYNOPSIS_DF, index=False)
             logger.info("Anime and anime with synopsis datasets preprocessed successfully")
 
         except Exception as e:

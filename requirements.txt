@@ -13,3 +13,4 @@ tensorflow
 matplotlib
 wordcloud
 dvc
+dvc-gs
