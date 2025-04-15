@@ -28,7 +28,7 @@ COPY . .
 RUN pip install --no-cache-dir -e .
 
 # Run the training pipeline before starting the application
-RUN python3 pipeline/training_pipeline.py
+RUN python pipeline/training_pipeline.py
 
 # Expose port 8000 to allow external access to the application
 EXPOSE 8000
