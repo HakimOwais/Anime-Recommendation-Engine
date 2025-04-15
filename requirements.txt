@@ -1,5 +1,5 @@
-numpy==1.19.2              # Strictly enforce AVX-free version
-pandas==1.2.5              # Compatible with numpy 1.19.2
+numpy==1.24.4             # Strictly enforce AVX-free version
+pandas==1.5.3              # Compatible with numpy 1.19.2
 comet_ml>=3.0.0
 python-dotenv>=0.19.0
 scikit-learn==0.24.2       # Works with numpy 1.19.2
