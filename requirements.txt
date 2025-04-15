@@ -1,33 +1,16 @@
-numpy==1.24.4             # Strictly enforce AVX-free version
-pandas==1.5.3              # Compatible with numpy 1.19.2
-comet_ml>=3.0.0
-python-dotenv>=0.19.0
-scikit-learn==0.24.2       # Works with numpy 1.19.2
-setuptools>=65.5.0
-google-cloud-storage>=2.0.0
-flask>=2.0.0
-fastapi>=0.68.0
-pyyaml>=6.0
-uvicorn[standard]>=0.15.0
-tensorflow-cpu==2.12.0     # Correct, but ensure it's installed first
-matplotlib==3.3.4          # Compatible with numpy 1.19.2
-wordcloud>=1.8.1
-dvc>=2.0.0
-dvc-gs>=2.0.0
-
-# numpy==1.19.2
-# pandas
-# comet_ml
-# python-dotenv
-# scikit-learn
-# setuptools
-# google-cloud-storage
-# flask
-# fastapi
-# pyyaml
-# uvicorn[standard]
-# tensorflow-cpu==2.12.0
-# matplotlib
-# wordcloud
-# dvc
-# dvc-gs
+numpy
+pandas
+comet_ml
+python-dotenv
+scikit-learn
+setuptools
+google-cloud-storage
+flask
+fastapi
+pyyaml
+uvicorn[standard]
+tensorflow-cpu==2.12.0
+matplotlib
+wordcloud
+dvc
+dvc-gs
