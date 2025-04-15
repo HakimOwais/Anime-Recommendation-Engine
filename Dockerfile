@@ -27,6 +27,9 @@ COPY . .
 # Install Python dependencies from the project's setup file (editable mode)
 RUN pip install --no-cache-dir -e .
 
+# Test before running pipeline
+RUN python -c "import tensorflow as tf; print(f'TensorFlow {tf.__version__} OK')"
+
 # Run the training pipeline before starting the application
 RUN python pipeline/training_pipeline.py
 

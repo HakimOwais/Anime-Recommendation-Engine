@@ -64,7 +64,7 @@ pipeline {
                         gcloud auth configure-docker --quiet
 
                         docker buildx create --use
-                        docker buildx build --platform linux/amd64 -t gcr.io/${GCP_PROJECT}/ml-project:latest --push .
+                        docker buildx build --platform linux/amd64 -t gcr.io/${GCP_PROJECT}/anime-recs:latest --push .
                         '''
                     }
                 }
