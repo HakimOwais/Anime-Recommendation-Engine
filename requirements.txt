@@ -9,7 +9,7 @@ flask
 fastapi
 pyyaml
 uvicorn[standard]
-tensorflow-cpu
+tensorflow
 matplotlib
 wordcloud
 dvc
