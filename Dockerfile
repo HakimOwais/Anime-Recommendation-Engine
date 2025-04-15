@@ -6,6 +6,7 @@ FROM python:3.8-slim
 # - PYTHONUNBUFFERED=1 ensures that Python output is displayed immediately (useful for logging)
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
+    HDF5_DIR=/usr/local/hdf5
 
 # Install system dependencies required by TensorFlow
 RUN apt-get update && apt-get install -y \
@@ -20,6 +21,9 @@ RUN apt-get update && apt-get install -y \
 
 # Setting working directory
 WORKDIR /app
+
+# Install h5py with pre-built wheels first
+RUN pip install --only-binary=h5py h5py==3.10.0
 
 # Copy all project files into the container
 COPY . .
