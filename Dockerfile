@@ -1,5 +1,5 @@
 # Use a lightweight Python image as the Base Image
-FROM python:slim
+FROM python:3.8-slim
 
 # Setting up env variables 
 # - PYTHONDONTWRITEBYTECODE=1 prevents Python from writing .pyc files (cached bytecode files)
