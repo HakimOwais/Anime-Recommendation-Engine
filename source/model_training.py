@@ -1,4 +1,4 @@
-# import comet_ml
+import comet_ml
 import numpy as np
 import joblib
 import os
@@ -19,11 +19,11 @@ logger = get_logger(__name__)
 class ModelTraining:
     def __init__(self, data_path):
         self.data_path = data_path
-        # self.experiment = comet_ml.Experiment(
-        #     api_key=os.environ.get("API_KEY"),
-        #     project_name="recommendater-system",
-        #     workspace="hakimowais"
-        # )
+        self.experiment = comet_ml.Experiment(
+            api_key=os.environ.get("API_KEY"),
+            project_name="recommendater-system",
+            workspace="hakimowais"
+        )
         
         logger.info("Model training Initialized")
 
@@ -100,8 +100,8 @@ class ModelTraining:
                     train_loss = history.history["loss"][epoch]
                     val_loss = history.history["val_loss"][epoch]
 
-                    # self.experiment.log_metric('train_loss',train_loss,step=epoch)
-                    # self.experiment.log_metric('val_loss',val_loss,step=epoch)
+                    self.experiment.log_metric('train_loss',train_loss,step=epoch)
+                    self.experiment.log_metric('val_loss',val_loss,step=epoch)
 
             except Exception as e:
                 raise CustomException("Model training failed.....")
@@ -134,9 +134,9 @@ class ModelTraining:
             joblib.dump(user_weights,USER_WEIGHTS_PATH)
             joblib.dump(anime_weights,ANIME_WEIGHTS_PATH)
 
-            # self.experiment.log_asset(MODEL_PATH)
-            # self.experiment.log_asset(ANIME_WEIGHTS_PATH)
-            # self.experiment.log_asset(USER_WEIGHTS_PATH)
+            self.experiment.log_asset(MODEL_PATH)
+            self.experiment.log_asset(ANIME_WEIGHTS_PATH)
+            self.experiment.log_asset(USER_WEIGHTS_PATH)
 
             logger.info("User and Anime weights saved sucesfully....")
         except Exception as e:
