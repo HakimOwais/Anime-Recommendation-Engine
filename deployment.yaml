@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: anime
+  name: anime-recs
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: anime
+      app: anime-recs
   template:
     metadata:
       labels:
-        app: anime
+        app: anime-recs
     spec:
       containers:
-      - name: anime-container
+      - name: anime-recs-container
         image: gcr.io/my-project-01-452610/anime-recs:latest
         ports:
         - containerPort: 8000 
@@ -21,11 +21,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: anime-service
+  name: anime-recs-service
 spec:
   type: LoadBalancer
   selector:
-    app: anime
+    app: anime-recs
   ports:
   - protocol: TCP
     port: 80
