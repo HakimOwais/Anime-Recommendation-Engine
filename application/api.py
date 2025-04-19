@@ -9,7 +9,7 @@ app = FastAPI()
 def index():
     return "Service is healthy and running"
 
-@app.post("/")
+@app.post("/recommend")
 async def get_recommendations(data: UserRequest):
     try:
         recommendations = hybrid_recommendation(data.userID)
