@@ -183,3 +183,4 @@ artifacts/model_checkpoint
 artifacts/processed
 artifacts/raw
 artifacts/weights
+notebook/
